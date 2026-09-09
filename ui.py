@@ -5,6 +5,9 @@ from pydantic import ValidationError
 from database import TicketNotFoundError, TicketRepository
 from models import Ticket, TicketCreate, TicketFilters, TicketPriority, TicketStatus, TicketUpdate
 
+PRIORITY_VALUES = tuple(ticket_priority.value for ticket_priority in TicketPriority)
+STATUS_VALUES = tuple(ticket_status.value for ticket_status in TicketStatus)
+
 
 def _event_value(args: object) -> str:
     if isinstance(args, dict):
@@ -12,6 +15,15 @@ def _event_value(args: object) -> str:
     else:
         value = args
     return "" if value is None else str(value)
+
+
+def _normalize_select_value(value: object, allowed_values: tuple[str, ...]) -> str:
+    raw_value = _event_value(value)
+    if raw_value.isdigit():
+        index = int(raw_value)
+        if 0 <= index < len(allowed_values):
+            return allowed_values[index]
+    return raw_value
 
 
 def build_ticket_dashboard(repository: TicketRepository) -> None:
@@ -28,7 +40,7 @@ def build_ticket_dashboard(repository: TicketRepository) -> None:
                 title = ui.input("Title").classes("w-full").mark("create-title")
                 requester = ui.input("Requester").classes("w-full").mark("create-requester")
                 priority = ui.select(
-                    [ticket_priority.value for ticket_priority in TicketPriority],
+                    {ticket_priority: ticket_priority for ticket_priority in PRIORITY_VALUES},
                     value=TicketPriority.medium.value,
                     label="Priority",
                 ).classes("w-full").mark("create-priority")
@@ -39,12 +51,12 @@ def build_ticket_dashboard(repository: TicketRepository) -> None:
             ui.label("Filters").classes("text-xl font-semibold")
             with ui.row().classes("w-full items-center gap-3"):
                 status_filter = ui.select(
-                    ["all", *[ticket_status.value for ticket_status in TicketStatus]],
+                    {"all": "all", **{ticket_status: ticket_status for ticket_status in STATUS_VALUES}},
                     value="all",
                     label="Status",
                 ).classes("w-44").mark("status-filter")
                 priority_filter = ui.select(
-                    ["all", *[ticket_priority.value for ticket_priority in TicketPriority]],
+                    {"all": "all", **{ticket_priority: ticket_priority for ticket_priority in PRIORITY_VALUES}},
                     value="all",
                     label="Priority",
                 ).classes("w-44").mark("priority-filter")
@@ -54,9 +66,11 @@ def build_ticket_dashboard(repository: TicketRepository) -> None:
         tickets_container = ui.column().classes("w-full gap-3").mark("tickets-container")
 
         def current_filters() -> TicketFilters:
+            status_value = _normalize_select_value(status_filter.value, STATUS_VALUES)
+            priority_value = _normalize_select_value(priority_filter.value, PRIORITY_VALUES)
             return TicketFilters(
-                status=None if status_filter.value == "all" else TicketStatus(status_filter.value),
-                priority=None if priority_filter.value == "all" else TicketPriority(priority_filter.value),
+                status=None if status_value == "all" else TicketStatus(status_value),
+                priority=None if priority_value == "all" else TicketPriority(priority_value),
                 search=search.value,
             )
 
@@ -83,7 +97,7 @@ def build_ticket_dashboard(repository: TicketRepository) -> None:
                         title=title.value,
                         description=description.value,
                         requester=requester.value,
-                        priority=TicketPriority(priority.value),
+                        priority=TicketPriority(_normalize_select_value(priority.value, PRIORITY_VALUES)),
                     )
                 )
             except (ValidationError, ValueError) as error:
@@ -105,17 +119,19 @@ def build_ticket_dashboard(repository: TicketRepository) -> None:
                         ui.label(f"Requester: {ticket.requester}").classes("text-sm text-gray-500")
                     with ui.column().classes("min-w-48 gap-2"):
                         status_select = ui.select(
-                            [ticket_status.value for ticket_status in TicketStatus],
+                            {ticket_status: ticket_status for ticket_status in STATUS_VALUES},
                             value=ticket.status.value,
                             label="Status",
                         ).classes("w-full").mark(f"status-select-{ticket.id}").on(
                             "update:model-value",
-                            lambda event, ticket_id=ticket.id: update_status(ticket_id, _event_value(event.args)),
+                            lambda event, ticket_id=ticket.id: update_status(
+                                ticket_id, _normalize_select_value(event.args, STATUS_VALUES)
+                            ),
                         )
                         ui.button(
                             "Update status",
                             on_click=lambda ticket_id=ticket.id, selector=status_select: update_status(
-                                ticket_id, str(selector.value)
+                                ticket_id, _normalize_select_value(selector.value, STATUS_VALUES)
                             ),
                         ).props("flat").mark(f"update-status-{ticket.id}")
                         ui.label(f"Status: {ticket.status.value}").classes("text-sm text-gray-500").mark(
