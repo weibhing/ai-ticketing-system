@@ -5,7 +5,7 @@ from threading import Lock
 
 import duckdb
 
-from models import Ticket, TicketCreate, TicketFilters, TicketPriority, TicketStatus, TicketUpdate
+from app.models import Ticket, TicketCreate, TicketFilters, TicketPriority, TicketStatus, TicketUpdate
 
 
 class TicketNotFoundError(LookupError):
@@ -20,15 +20,10 @@ class TicketRepository:
             path.parent.mkdir(parents=True, exist_ok=True)
         self._connection = duckdb.connect(self.database_path)
         self._lock = Lock()
-        self._closed = False
         self._initialize()
 
     def close(self) -> None:
-        with self._lock:
-            if self._closed:
-                return
-            self._connection.close()
-            self._closed = True
+        self._connection.close()
 
     def _initialize(self) -> None:
         with self._lock:
@@ -55,7 +50,7 @@ class TicketRepository:
 
     def seed_defaults(self) -> None:
         with self._lock:
-            count = self._connection.execute("SELECT COUNT(*) FROM tickets").fetchone()[0]
+            count = self._connection.execute("SELECT count(*) FROM tickets").fetchone()[0]
         if count > 0:
             return
 
