@@ -1,6 +1,6 @@
 from typing import Annotated
 
-from fastapi import APIRouter, Depends, HTTPException, Path, Query, Response, status
+from fastapi import APIRouter, Depends, HTTPException, Path, Query, status
 
 from database import TicketNotFoundError, TicketRepository
 from models import Ticket, TicketCreate, TicketFilters, TicketPriority, TicketStatus, TicketUpdate
@@ -50,11 +50,10 @@ def create_api_router(repository: TicketRepository) -> APIRouter:
     def delete_ticket(
         ticket_id: Annotated[int, Path(gt=0)],
         tickets: TicketRepository = Depends(get_repository),
-    ) -> Response:
+    ) -> None:
         try:
             tickets.delete(ticket_id)
         except TicketNotFoundError as error:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(error)) from error
-        return Response(status_code=status.HTTP_204_NO_CONTENT)
 
     return router

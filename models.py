@@ -38,11 +38,11 @@ class TicketUpdate(BaseModel):
     priority: TicketPriority | None = None
     status: TicketStatus | None = None
 
-    @field_validator("title", "description", "requester", "priority", "status", mode="before")
+    @field_validator("title", "description", "requester", mode="before")
     @classmethod
-    def reject_null_and_normalize_strings(cls, value: Any) -> Any:
+    def normalize_strings(cls, value: Any) -> Any:
         if value is None:
-            raise ValueError("must not be null")
+            return value
         return value.strip() if isinstance(value, str) else value
 
 

@@ -49,7 +49,7 @@ class TicketRepository:
                     ticket_id INTEGER NOT NULL,
                     message VARCHAR NOT NULL,
                     created_at TIMESTAMP NOT NULL
-                )
+                );
                 """
             )
 
@@ -106,7 +106,7 @@ class TicketRepository:
     def list(self, filters: TicketFilters | None = None) -> list[Ticket]:
         filters = filters or TicketFilters()
         where_parts: list[str] = []
-        parameters: list[str] = []
+        parameters: list[object] = []
 
         if filters.status:
             where_parts.append("status = ?")
@@ -175,4 +175,7 @@ class TicketRepository:
     @staticmethod
     def _row_to_ticket(row: Iterable[object]) -> Ticket:
         keys = ["id", "title", "description", "requester", "priority", "status", "created_at", "updated_at"]
-        return Ticket.model_validate(dict(zip(keys, row, strict=True)))
+        try:
+            return Ticket.model_validate(dict(zip(keys, row, strict=True)))
+        except ValueError as e:
+            raise ValueError(f"Failed to map database row to Ticket model: {e}") from e

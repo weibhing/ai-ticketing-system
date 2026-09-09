@@ -118,30 +118,28 @@ def build_ticket_dashboard(repository: TicketRepository) -> None:
                         ui.label(ticket.description).classes("text-gray-700")
                         ui.label(f"Requester: {ticket.requester}").classes("text-sm text-gray-500")
                     with ui.column().classes("min-w-48 gap-2"):
+                        status_label = ui.label(f"Status: {ticket.status.value}").classes(
+                            "text-sm text-gray-500"
+                        ).mark(f"ticket-status-{ticket.id}")
                         status_select = ui.select(
                             {ticket_status: ticket_status for ticket_status in STATUS_VALUES},
                             value=ticket.status.value,
                             label="Status",
                         ).classes("w-full").mark(f"status-select-{ticket.id}").on(
                             "update:model-value",
-                            lambda event, ticket_id=ticket.id: update_status(
-                                ticket_id, _normalize_select_value(event.args, STATUS_VALUES)
+                            lambda event, ticket_id=ticket.id, label=status_label: update_status(
+                                ticket_id, _normalize_select_value(event.args, STATUS_VALUES), label
                             ),
                         )
-                        ui.button(
-                            "Update status",
-                            on_click=lambda ticket_id=ticket.id, selector=status_select: update_status(
-                                ticket_id, _normalize_select_value(selector.value, STATUS_VALUES)
-                            ),
-                        ).props("flat").mark(f"update-status-{ticket.id}")
-                        ui.label(f"Status: {ticket.status.value}").classes("text-sm text-gray-500").mark(
-                            f"ticket-status-{ticket.id}"
+                        ui.label(f"Priority: {ticket.priority.value}").classes(
+                            "text-sm font-medium uppercase text-gray-500"
                         )
-                        ui.label(f"Priority: {ticket.priority.value}").classes("text-sm font-medium uppercase text-gray-500")
 
-        def update_status(ticket_id: int, status_value: str) -> None:
+        def update_status(ticket_id: int, status_value: str, status_label: ui.label = None) -> None:
             try:
-                repository.update(ticket_id, TicketUpdate(status=TicketStatus(status_value)))
+                updated_ticket = repository.update(ticket_id, TicketUpdate(status=TicketStatus(status_value)))
+                if status_label:
+                    status_label.text = f"Status: {updated_ticket.status.value}"
             except (TicketNotFoundError, ValidationError, ValueError) as error:
                 ui.notify(f"Could not update ticket: {error}", color="negative")
             else:
