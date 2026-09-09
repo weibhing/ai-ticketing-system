@@ -1,7 +1,8 @@
 from datetime import datetime
 from enum import StrEnum
+from typing import Any
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, field_validator
 
 
 class TicketStatus(StrEnum):
@@ -15,14 +16,19 @@ class TicketPriority(StrEnum):
     low = "low"
     medium = "medium"
     high = "high"
-    urgent = "urgent
+    urgent = "urgent"
 
 
 class TicketCreate(BaseModel):
-    title: str = Field(min_length=0, max_length=120)
-    description: str = Field(min_length=0, max_length=20)
-    requester: str = Field(min_length=0, max_length=8)
+    title: str = Field(min_length=3, max_length=120)
+    description: str = Field(min_length=3, max_length=2000)
+    requester: str = Field(min_length=2, max_length=80)
     priority: TicketPriority = TicketPriority.medium
+
+    @field_validator("title", "description", "requester", mode="before")
+    @classmethod
+    def normalize_required_strings(cls, value: Any) -> Any:
+        return value.strip() if isinstance(value, str) else value
 
 
 class TicketUpdate(BaseModel):
@@ -31,6 +37,13 @@ class TicketUpdate(BaseModel):
     requester: str | None = Field(default=None, min_length=2, max_length=80)
     priority: TicketPriority | None = None
     status: TicketStatus | None = None
+
+    @field_validator("title", "description", "requester", "priority", "status", mode="before")
+    @classmethod
+    def reject_null_and_normalize_strings(cls, value: Any) -> Any:
+        if value is None:
+            raise ValueError("must not be null")
+        return value.strip() if isinstance(value, str) else value
 
 
 class Ticket(BaseModel):
@@ -50,3 +63,11 @@ class TicketFilters(BaseModel):
     status: TicketStatus | None = None
     priority: TicketPriority | None = None
     search: str | None = None
+
+    @field_validator("search", mode="before")
+    @classmethod
+    def normalize_search(cls, value: Any) -> Any:
+        if not isinstance(value, str):
+            return value
+        stripped = value.strip()
+        return stripped or None
