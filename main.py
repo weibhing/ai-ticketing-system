@@ -3,12 +3,11 @@ from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
-from nicegui import app as nicegui_app, ui
 import uvicorn
 
-from app.api import create_api_router
-from app.database import TicketRepository
-from app.ui import mount_ui
+from api import create_api_router
+from database import TicketRepository
+from ui import mount_ui
 
 
 def create_app(database_path: str | None = None, seed: bool = True) -> FastAPI:
@@ -30,13 +29,8 @@ def create_app(database_path: str | None = None, seed: bool = True) -> FastAPI:
     def health() -> dict[str, str]:
         return {"status": "ok"}
 
-    mount_ui(repository)
-    ui.run_with(app, title="Ticketing System", favicon="T", storage_secret=os.getenv("NICEGUI_SECRET", "dev-secret"))
+    mount_ui(app, repository, storage_secret=os.getenv("NICEGUI_SECRET", "dev-secret"))
     return app
 
-
-app = create_app()
-
-
 if __name__ in {"__main__", "__mp_main__"}:
-    uvicorn.run(app, host="127.0.0.1", port=int(os.getenv("PORT", "8000")))
+    uvicorn.run(create_app(), host="127.0.0.1", port=int(os.getenv("PORT", "8000")))

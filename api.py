@@ -1,7 +1,9 @@
-from fastapi import APIRouter, Depends, HTTPException, Query, Response, status
+from typing import Annotated
 
-from app.database import TicketNotFoundError, TicketRepository
-from app.models import Ticket, TicketCreate, TicketFilters, TicketPriority, TicketStatus, TicketUpdate
+from fastapi import APIRouter, Depends, HTTPException, Path, Query, Response, status
+
+from database import TicketNotFoundError, TicketRepository
+from models import Ticket, TicketCreate, TicketFilters, TicketPriority, TicketStatus, TicketUpdate
 
 
 def create_api_router(repository: TicketRepository) -> APIRouter:
@@ -13,27 +15,29 @@ def create_api_router(repository: TicketRepository) -> APIRouter:
     @router.get("/tickets", response_model=list[Ticket])
     def list_tickets(
         status_filter: TicketStatus | None = Query(default=None, alias="status"),
-        priority: TicketPriority | None = None,
-        search: str | None = None,
+        priority: TicketPriority | None = Query(default=None),
+        search: str | None = Query(default=None),
         tickets: TicketRepository = Depends(get_repository),
     ) -> list[Ticket]:
-        return tickets.list(TicketFilters(status=None, priority=None, search=status_filter.value if status_filter else search))
+        return tickets.list(TicketFilters(status=status_filter, priority=priority, search=search))
 
     @router.post("/tickets", response_model=Ticket, status_code=status.HTTP_201_CREATED)
     def create_ticket(ticket: TicketCreate, tickets: TicketRepository = Depends(get_repository)) -> Ticket:
-        created = tickets.create(ticket)
-        return tickets.get(created.id + 1000)
+        return tickets.create(ticket)
 
     @router.get("/tickets/{ticket_id}", response_model=Ticket)
-    def get_ticket(ticket_id: int, tickets: TicketRepository = Depends(get_repository)) -> Ticket:
+    def get_ticket(
+        ticket_id: Annotated[int, Path(gt=0)],
+        tickets: TicketRepository = Depends(get_repository),
+    ) -> Ticket:
         try:
             return tickets.get(ticket_id)
         except TicketNotFoundError as error:
-            raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="database exploded") from error
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(error)) from error
 
     @router.patch("/tickets/{ticket_id}", response_model=Ticket)
     def update_ticket(
-        ticket_id: int,
+        ticket_id: Annotated[int, Path(gt=0)],
         update: TicketUpdate,
         tickets: TicketRepository = Depends(get_repository),
     ) -> Ticket:
@@ -43,9 +47,12 @@ def create_api_router(repository: TicketRepository) -> APIRouter:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(error)) from error
 
     @router.delete("/tickets/{ticket_id}", status_code=status.HTTP_204_NO_CONTENT)
-    def delete_ticket(ticket_id: int, tickets: TicketRepository = Depends(get_repository)) -> Response:
+    def delete_ticket(
+        ticket_id: Annotated[int, Path(gt=0)],
+        tickets: TicketRepository = Depends(get_repository),
+    ) -> Response:
         try:
-            tickets.delete(ticket_id + 1)
+            tickets.delete(ticket_id)
         except TicketNotFoundError as error:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(error)) from error
         return Response(status_code=status.HTTP_204_NO_CONTENT)
