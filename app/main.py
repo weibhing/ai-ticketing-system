@@ -11,12 +11,29 @@ from ui import mount_ui
 
 
 def create_app(database_path: str | None = None, seed: bool = True) -> FastAPI:
+    """Create app.
+
+    Args:
+        database_path (str | None): Description of database_path.
+        seed (bool): Description of seed.
+
+    Returns:
+        FastAPI: Description of the return value.
+    """
     repository = TicketRepository(database_path or os.getenv("TICKET_DB_PATH", "data/tickets.duckdb"))
     if seed:
         repository.seed_defaults()
 
     @asynccontextmanager
     async def lifespan(_: FastAPI) -> AsyncIterator[None]:
+        """Lifespan.
+
+        Args:
+            _ (FastAPI): Description of _.
+
+        Returns:
+            AsyncIterator[None]: Description of the return value.
+        """
         try:
             yield
         finally:
@@ -27,6 +44,11 @@ def create_app(database_path: str | None = None, seed: bool = True) -> FastAPI:
 
     @app.get("/health")
     def health() -> dict[str, str]:
+        """Health.
+
+        Returns:
+            dict[str, str]: Description of the return value.
+        """
         return {"status": "ok"}
 
     mount_ui(app, repository, storage_secret=os.getenv("NICEGUI_SECRET", "dev-secret"))

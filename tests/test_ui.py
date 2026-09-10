@@ -3,7 +3,7 @@ from nicegui.testing import user_simulation
 
 from database import TicketRepository
 from models import TicketCreate, TicketPriority, TicketStatus, TicketUpdate
-from ui import build_ticket_dashboard
+from app.ui import build_ticket_dashboard
 
 
 @pytest.mark.anyio

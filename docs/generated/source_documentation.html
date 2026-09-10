@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Source Code Documentation</title>
+<style>
+  body { font-family: system-ui, sans-serif; max-width: 960px; margin: 2rem auto; padding: 0 1rem; color: #1a1a1a; }
+  h1 { border-bottom: 2px solid #333; padding-bottom: 0.5rem; }
+  p.summary { color: #555; font-style: italic; }
+  nav.index { background: #fafafa; border: 1px solid #ddd; border-radius: 6px; padding: 0.75rem 1rem 1rem; margin: 1.5rem 0 2rem; }
+  nav.index h2 { margin-top: 0; }
+  nav.index h3 { font-family: monospace; font-size: 0.95rem; background: #f0f0f0; padding: 0.35rem 0.5rem; margin: 0.75rem 0 0.25rem; }
+  nav.index ul { list-style: none; padding-left: 1rem; margin: 0.25rem 0; }
+  nav.index li { margin: 0.15rem 0; }
+  nav.index a { text-decoration: none; color: #1a5490; }
+  nav.index a:hover { text-decoration: underline; }
+  section.module { margin-top: 2rem; }
+  section.module h2 { font-size: 1rem; font-family: monospace; background: #f0f0f0; padding: 0.5rem; }
+  div.class { margin-left: 1rem; border-left: 3px solid #6c8ebf; padding-left: 1rem; margin-bottom: 1rem; }
+  div.function { margin: 0.75rem 0 1rem 1rem; }
+  div.function:target { background: #fff8dc; border-radius: 4px; padding: 0.25rem 0.5rem; }
+  h3 { color: #333; }
+  h4 { margin-bottom: 0.25rem; }
+  pre.docstring { background: #f7f7f7; padding: 0.5rem 0.75rem; border-radius: 4px; white-space: pre-wrap; }
+  footer { margin-top: 3rem; color: #777; font-size: 0.85rem; }
+</style>
+</head>
+<body>
+<h1>Source Code Documentation</h1>
+<p class="summary">5 modules &middot; 4 classes &middot; 34 functions</p>
+<nav class="index"><h2>Index</h2>
+<div class="index-module"><h3>app/api.py</h3><ul>
+<li><a href="#app-api.py--create_api_router"><code>create_api_router</code></a></li>
+<li><a href="#app-api.py--get_repository"><code>get_repository</code></a></li>
+<li><a href="#app-api.py--list_tickets"><code>list_tickets</code></a></li>
+<li><a href="#app-api.py--create_ticket"><code>create_ticket</code></a></li>
+<li><a href="#app-api.py--get_ticket"><code>get_ticket</code></a></li>
+<li><a href="#app-api.py--update_ticket"><code>update_ticket</code></a></li>
+<li><a href="#app-api.py--delete_ticket"><code>delete_ticket</code></a></li>
+</ul></div>
+<div class="index-module"><h3>app/database.py</h3><ul>
+<li><strong>class TicketRepository</strong><ul>
+<li><a href="#app-database.py--TicketRepository.__init__"><code>TicketRepository.__init__</code></a></li>
+<li><a href="#app-database.py--TicketRepository.close"><code>TicketRepository.close</code></a></li>
+<li><a href="#app-database.py--TicketRepository._initialize"><code>TicketRepository._initialize</code></a></li>
+<li><a href="#app-database.py--TicketRepository.seed_defaults"><code>TicketRepository.seed_defaults</code></a></li>
+<li><a href="#app-database.py--TicketRepository.create"><code>TicketRepository.create</code></a></li>
+<li><a href="#app-database.py--TicketRepository.list"><code>TicketRepository.list</code></a></li>
+<li><a href="#app-database.py--TicketRepository.get"><code>TicketRepository.get</code></a></li>
+<li><a href="#app-database.py--TicketRepository.update"><code>TicketRepository.update</code></a></li>
+<li><a href="#app-database.py--TicketRepository.delete"><code>TicketRepository.delete</code></a></li>
+<li><a href="#app-database.py--TicketRepository._now"><code>TicketRepository._now</code></a></li>
+<li><a href="#app-database.py--TicketRepository._row_to_ticket"><code>TicketRepository._row_to_ticket</code></a></li>
+</ul></li>
+</ul></div>
+<div class="index-module"><h3>app/main.py</h3><ul>
+<li><a href="#app-main.py--create_app"><code>create_app</code></a></li>
+<li><a href="#app-main.py--lifespan"><code>lifespan</code></a></li>
+<li><a href="#app-main.py--health"><code>health</code></a></li>
+</ul></div>
+<div class="index-module"><h3>app/models.py</h3><ul>
+<li><strong>class TicketCreate</strong><ul>
+<li><a href="#app-models.py--TicketCreate.normalize_required_strings"><code>TicketCreate.normalize_required_strings</code></a></li>
+</ul></li>
+<li><strong>class TicketUpdate</strong><ul>
+<li><a href="#app-models.py--TicketUpdate.reject_null_and_normalize_strings"><code>TicketUpdate.reject_null_and_normalize_strings</code></a></li>
+</ul></li>
+<li><strong>class TicketFilters</strong><ul>
+<li><a href="#app-models.py--TicketFilters.normalize_search"><code>TicketFilters.normalize_search</code></a></li>
+</ul></li>
+</ul></div>
+<div class="index-module"><h3>app/ui.py</h3><ul>
+<li><a href="#app-ui.py--_event_value"><code>_event_value</code></a></li>
+<li><a href="#app-ui.py--_normalize_select_value"><code>_normalize_select_value</code></a></li>
+<li><a href="#app-ui.py--build_ticket_dashboard"><code>build_ticket_dashboard</code></a></li>
+<li><a href="#app-ui.py--current_filters"><code>current_filters</code></a></li>
+<li><a href="#app-ui.py--refresh"><code>refresh</code></a></li>
+<li><a href="#app-ui.py--clear_filters"><code>clear_filters</code></a></li>
+<li><a href="#app-ui.py--create_ticket"><code>create_ticket</code></a></li>
+<li><a href="#app-ui.py--render_ticket"><code>render_ticket</code></a></li>
+<li><a href="#app-ui.py--update_status"><code>update_status</code></a></li>
+<li><a href="#app-ui.py--mount_ui"><code>mount_ui</code></a></li>
+</ul></div>
+</nav>
+<section class="module"><h2>app/api.py</h2>
+<div class="function" id="app-api.py--create_api_router"><h4><code>def create_api_router(repository: TicketRepository) -&gt; APIRouter</code></h4><pre class="docstring">Create api router.
+
+    Args:
+        repository (TicketRepository): Description of repository.
+
+    Returns:
+        APIRouter: Description of the return value.
+
+    Raises:
+        HTTPException: Description of when this is raised.
+    </pre></div>
+<div class="function" id="app-api.py--get_repository"><h4><code>def get_repository() -&gt; TicketRepository</code></h4><pre class="docstring">Get repository.
+
+        Returns:
+            TicketRepository: Description of the return value.
+        </pre></div>
+<div class="function" id="app-api.py--list_tickets"><h4><code>def list_tickets(status_filter: TicketStatus | None = ..., priority: TicketPriority | None = ..., search: str | None = ..., tickets: TicketRepository = ...) -&gt; list[Ticket]</code></h4><pre class="docstring">List tickets.
+
+        Args:
+            status_filter (TicketStatus | None): Description of status_filter.
+            priority (TicketPriority | None): Description of priority.
+            search (str | None): Description of search.
+            tickets (TicketRepository): Description of tickets.
+
+        Returns:
+            list[Ticket]: Description of the return value.
+        </pre></div>
+<div class="function" id="app-api.py--create_ticket"><h4><code>def create_ticket(ticket: TicketCreate, tickets: TicketRepository = ...) -&gt; Ticket</code></h4><pre class="docstring">Create ticket.
+
+        Args:
+            ticket (TicketCreate): Description of ticket.
+            tickets (TicketRepository): Description of tickets.
+
+        Returns:
+            Ticket: Description of the return value.
+        </pre></div>
+<div class="function" id="app-api.py--get_ticket"><h4><code>def get_ticket(ticket_id: Annotated[int, Path(gt=0)], tickets: TicketRepository = ...) -&gt; Ticket</code></h4><pre class="docstring">Get ticket.
+
+        Args:
+            ticket_id (Annotated[int, Path(gt=0)]): Description of ticket_id.
+            tickets (TicketRepository): Description of tickets.
+
+        Returns:
+            Ticket: Description of the return value.
+
+        Raises:
+            HTTPException: Description of when this is raised.
+        </pre></div>
+<div class="function" id="app-api.py--update_ticket"><h4><code>def update_ticket(ticket_id: Annotated[int, Path(gt=0)], update: TicketUpdate, tickets: TicketRepository = ...) -&gt; Ticket</code></h4><pre class="docstring">Update ticket.
+
+        Args:
+            ticket_id (Annotated[int, Path(gt=0)]): Description of ticket_id.
+            update (TicketUpdate): Description of update.
+            tickets (TicketRepository): Description of tickets.
+
+        Returns:
+            Ticket: Description of the return value.
+
+        Raises:
+            HTTPException: Description of when this is raised.
+        </pre></div>
+<div class="function" id="app-api.py--delete_ticket"><h4><code>def delete_ticket(ticket_id: Annotated[int, Path(gt=0)], tickets: TicketRepository = ...) -&gt; Response</code></h4><pre class="docstring">Delete ticket.
+
+        Args:
+            ticket_id (Annotated[int, Path(gt=0)]): Description of ticket_id.
+            tickets (TicketRepository): Description of tickets.
+
+        Returns:
+            Response: Description of the return value.
+
+        Raises:
+            HTTPException: Description of when this is raised.
+        </pre></div>
+</section>
+<section class="module"><h2>app/database.py</h2>
+<div class="class"><h3>class TicketRepository</h3>
+<div class="function" id="app-database.py--TicketRepository.__init__"><h4><code>def __init__(self, database_path: str | Path = ...) -&gt; None</code></h4><pre class="docstring">Init.
+
+        Args:
+            database_path (str | Path): Description of database_path.
+        </pre></div>
+<div class="function" id="app-database.py--TicketRepository.close"><h4><code>def close(self) -&gt; None</code></h4><pre class="docstring">Close.</pre></div>
+<div class="function" id="app-database.py--TicketRepository._initialize"><h4><code>def _initialize(self) -&gt; None</code></h4><pre class="docstring">Initialize.</pre></div>
+<div class="function" id="app-database.py--TicketRepository.seed_defaults"><h4><code>def seed_defaults(self) -&gt; None</code></h4><pre class="docstring">Seed defaults.</pre></div>
+<div class="function" id="app-database.py--TicketRepository.create"><h4><code>def create(self, ticket: TicketCreate) -&gt; Ticket</code></h4><pre class="docstring">Create.
+
+        Args:
+            ticket (TicketCreate): Description of ticket.
+
+        Returns:
+            Ticket: Description of the return value.
+        </pre></div>
+<div class="function" id="app-database.py--TicketRepository.list"><h4><code>def list(self, filters: TicketFilters | None = ...) -&gt; list[Ticket]</code></h4><pre class="docstring">List.
+
+        Args:
+            filters (TicketFilters | None): Description of filters.
+
+        Returns:
+            list[Ticket]: Description of the return value.
+        </pre></div>
+<div class="function" id="app-database.py--TicketRepository.get"><h4><code>def get(self, ticket_id: int) -&gt; Ticket</code></h4><pre class="docstring">Get.
+
+        Args:
+            ticket_id (int): Description of ticket_id.
+
+        Returns:
+            Ticket: Description of the return value.
+
+        Raises:
+            TicketNotFoundError: Description of when this is raised.
+        </pre></div>
+<div class="function" id="app-database.py--TicketRepository.update"><h4><code>def update(self, ticket_id: int, update: TicketUpdate) -&gt; Ticket</code></h4><pre class="docstring">Update.
+
+        Args:
+            ticket_id (int): Description of ticket_id.
+            update (TicketUpdate): Description of update.
+
+        Returns:
+            Ticket: Description of the return value.
+
+        Raises:
+            TicketNotFoundError: Description of when this is raised.
+        </pre></div>
+<div class="function" id="app-database.py--TicketRepository.delete"><h4><code>def delete(self, ticket_id: int) -&gt; None</code></h4><pre class="docstring">Delete.
+
+        Args:
+            ticket_id (int): Description of ticket_id.
+
+        Raises:
+            TicketNotFoundError: Description of when this is raised.
+        </pre></div>
+<div class="function" id="app-database.py--TicketRepository._now"><h4><code>def _now() -&gt; datetime</code></h4><pre class="docstring">Now.
+
+        Returns:
+            datetime: Description of the return value.
+        </pre></div>
+<div class="function" id="app-database.py--TicketRepository._row_to_ticket"><h4><code>def _row_to_ticket(row: Iterable[object]) -&gt; Ticket</code></h4><pre class="docstring">Row to ticket.
+
+        Args:
+            row (Iterable[object]): Description of row.
+
+        Returns:
+            Ticket: Description of the return value.
+        </pre></div>
+</div>
+</section>
+<section class="module"><h2>app/main.py</h2>
+<div class="function" id="app-main.py--create_app"><h4><code>def create_app(database_path: str | None = ..., seed: bool = ...) -&gt; FastAPI</code></h4><pre class="docstring">Create app.
+
+    Args:
+        database_path (str | None): Description of database_path.
+        seed (bool): Description of seed.
+
+    Returns:
+        FastAPI: Description of the return value.
+    </pre></div>
+<div class="function" id="app-main.py--lifespan"><h4><code>async def lifespan(_: FastAPI) -&gt; AsyncIterator[None]</code></h4><pre class="docstring">Lifespan.
+
+        Args:
+            _ (FastAPI): Description of _.
+
+        Returns:
+            AsyncIterator[None]: Description of the return value.
+        </pre></div>
+<div class="function" id="app-main.py--health"><h4><code>def health() -&gt; dict[str, str]</code></h4><pre class="docstring">Health.
+
+        Returns:
+            dict[str, str]: Description of the return value.
+        </pre></div>
+</section>
+<section class="module"><h2>app/models.py</h2>
+<div class="class"><h3>class TicketCreate</h3>
+<div class="function" id="app-models.py--TicketCreate.normalize_required_strings"><h4><code>def normalize_required_strings(cls, value: Any) -&gt; Any</code></h4><pre class="docstring">Normalize required strings.
+
+        Args:
+            value (Any): Description of value.
+
+        Returns:
+            Any: Description of the return value.
+        </pre></div>
+</div>
+<div class="class"><h3>class TicketUpdate</h3>
+<div class="function" id="app-models.py--TicketUpdate.reject_null_and_normalize_strings"><h4><code>def reject_null_and_normalize_strings(cls, value: Any) -&gt; Any</code></h4><pre class="docstring">Reject null and normalize strings.
+
+        Args:
+            value (Any): Description of value.
+
+        Returns:
+            Any: Description of the return value.
+
+        Raises:
+            ValueError: Description of when this is raised.
+        </pre></div>
+</div>
+<div class="class"><h3>class TicketFilters</h3>
+<div class="function" id="app-models.py--TicketFilters.normalize_search"><h4><code>def normalize_search(cls, value: Any) -&gt; Any</code></h4><pre class="docstring">Normalize search.
+
+        Args:
+            value (Any): Description of value.
+
+        Returns:
+            Any: Description of the return value.
+        </pre></div>
+</div>
+</section>
+<section class="module"><h2>app/ui.py</h2>
+<div class="function" id="app-ui.py--_event_value"><h4><code>def _event_value(args: object) -&gt; str</code></h4><pre class="docstring">Event value.
+
+    Args:
+        args (object): Description of args.
+
+    Returns:
+        str: Description of the return value.
+    </pre></div>
+<div class="function" id="app-ui.py--_normalize_select_value"><h4><code>def _normalize_select_value(value: object, allowed_values: tuple[str, ...]) -&gt; str</code></h4><pre class="docstring">Normalize select value.
+
+    Args:
+        value (object): Description of value.
+        allowed_values (tuple[str, ...]): Description of allowed_values.
+
+    Returns:
+        str: Description of the return value.
+    </pre></div>
+<div class="function" id="app-ui.py--build_ticket_dashboard"><h4><code>def build_ticket_dashboard(repository: TicketRepository) -&gt; None</code></h4><pre class="docstring">Build ticket dashboard.
+
+    Args:
+        repository (TicketRepository): Description of repository.
+    </pre></div>
+<div class="function" id="app-ui.py--current_filters"><h4><code>def current_filters() -&gt; TicketFilters</code></h4><pre class="docstring">Current filters.
+
+            Returns:
+                TicketFilters: Description of the return value.
+            </pre></div>
+<div class="function" id="app-ui.py--refresh"><h4><code>def refresh() -&gt; None</code></h4><pre class="docstring">Refresh.</pre></div>
+<div class="function" id="app-ui.py--clear_filters"><h4><code>def clear_filters() -&gt; None</code></h4><pre class="docstring">Clear filters.</pre></div>
+<div class="function" id="app-ui.py--create_ticket"><h4><code>def create_ticket() -&gt; None</code></h4><pre class="docstring">Create ticket.</pre></div>
+<div class="function" id="app-ui.py--render_ticket"><h4><code>def render_ticket(ticket: Ticket) -&gt; None</code></h4><pre class="docstring">Render ticket.
+
+            Args:
+                ticket (Ticket): Description of ticket.
+            </pre></div>
+<div class="function" id="app-ui.py--update_status"><h4><code>def update_status(ticket_id: int, status_value: str) -&gt; None</code></h4><pre class="docstring">Update status.
+
+            Args:
+                ticket_id (int): Description of ticket_id.
+                status_value (str): Description of status_value.
+            </pre></div>
+<div class="function" id="app-ui.py--mount_ui"><h4><code>def mount_ui(app: FastAPI, repository: TicketRepository, storage_secret: str | None = ...) -&gt; None</code></h4><pre class="docstring">Mount ui.
+
+    Args:
+        app (FastAPI): Description of app.
+        repository (TicketRepository): Description of repository.
+        storage_secret (str | None): Description of storage_secret.
+    </pre></div>
+</section>
+<footer>Generated by <code>docs_agent.skills.generate_html_doc</code> at 2026-09-10T05:30:40.546578+00:00 following the 5-phase workflow in <code>docs/documentation-workflow.md</code>.</footer>
+</body>
+</html>

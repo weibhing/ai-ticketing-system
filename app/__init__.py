@@ -1,1 +1,1 @@
-"""Compatibility package for the flat project layout."""
+"""Ticketing system application package."""

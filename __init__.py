@@ -1,1 +1,0 @@
-"""Ticketing system application package."""

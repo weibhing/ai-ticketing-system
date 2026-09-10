@@ -1,0 +1,682 @@
+2026-09-10 12:04:38,012 INFO     docs_agent: === Entering phase: scope_identification ===
+2026-09-10 12:04:38,026 INFO     docs_agent: Scope identification found 6 candidate file(s)
+2026-09-10 12:04:38,031 INFO     docs_agent: Scope: 6 file(s) total, 6 changed, 0 unchanged (force=False)
+2026-09-10 12:04:38,032 INFO     docs_agent: === Entering phase: file_logic_analysis ===
+2026-09-10 12:04:38,033 DEBUG    docs_agent: Analyzed C:\Users\weibhing\OneDrive - Intel Corporation\Documents\ai-ticketing-system\app\__init__.py: 0 function(s) found
+2026-09-10 12:04:38,069 DEBUG    docs_agent: Analyzed C:\Users\weibhing\OneDrive - Intel Corporation\Documents\ai-ticketing-system\app\api.py: 7 function(s) found
+2026-09-10 12:04:38,079 DEBUG    docs_agent: Analyzed C:\Users\weibhing\OneDrive - Intel Corporation\Documents\ai-ticketing-system\app\database.py: 11 function(s) found
+2026-09-10 12:04:38,082 DEBUG    docs_agent: Analyzed C:\Users\weibhing\OneDrive - Intel Corporation\Documents\ai-ticketing-system\app\main.py: 3 function(s) found
+2026-09-10 12:04:38,084 DEBUG    docs_agent: Analyzed C:\Users\weibhing\OneDrive - Intel Corporation\Documents\ai-ticketing-system\app\models.py: 3 function(s) found
+2026-09-10 12:04:38,093 DEBUG    docs_agent: Analyzed C:\Users\weibhing\OneDrive - Intel Corporation\Documents\ai-ticketing-system\app\ui.py: 10 function(s) found
+2026-09-10 12:04:38,094 INFO     docs_agent: Analysis: 34 function(s) across 6 file(s), 34 missing docstrings
+2026-09-10 12:04:38,094 INFO     docs_agent: === Entering phase: inline_documentation ===
+2026-09-10 12:04:38,095 DEBUG    docs_agent: Docstring prompt for create_api_router:
+You are a documentation agent. Write a concise Google-style Python docstring for the function described below. Return only the docstring body text (no triple quotes, no code).
+Function: create_api_router
+Async: False
+Parameters: repository: TicketRepository
+Return type: APIRouter
+Raises: HTTPException
+Decorators: none
+
+2026-09-10 12:04:38,095 DEBUG    docs_agent: Docstring prompt for get_repository:
+You are a documentation agent. Write a concise Google-style Python docstring for the function described below. Return only the docstring body text (no triple quotes, no code).
+Function: get_repository
+Async: False
+Parameters: none
+Return type: TicketRepository
+Raises: none observed
+Decorators: none
+
+2026-09-10 12:04:38,095 DEBUG    docs_agent: Docstring prompt for list_tickets:
+You are a documentation agent. Write a concise Google-style Python docstring for the function described below. Return only the docstring body text (no triple quotes, no code).
+Function: list_tickets
+Async: False
+Parameters: status_filter: TicketStatus | None, priority: TicketPriority | None, search: str | None, tickets: TicketRepository
+Return type: list[Ticket]
+Raises: none observed
+Decorators: router.get('/tickets', response_model=list[Ticket])
+
+2026-09-10 12:04:38,095 DEBUG    docs_agent: Docstring prompt for create_ticket:
+You are a documentation agent. Write a concise Google-style Python docstring for the function described below. Return only the docstring body text (no triple quotes, no code).
+Function: create_ticket
+Async: False
+Parameters: ticket: TicketCreate, tickets: TicketRepository
+Return type: Ticket
+Raises: none observed
+Decorators: router.post('/tickets', response_model=Ticket, status_code=status.HTTP_201_CREATED)
+
+2026-09-10 12:04:38,095 DEBUG    docs_agent: Docstring prompt for get_ticket:
+You are a documentation agent. Write a concise Google-style Python docstring for the function described below. Return only the docstring body text (no triple quotes, no code).
+Function: get_ticket
+Async: False
+Parameters: ticket_id: Annotated[int, Path(gt=0)], tickets: TicketRepository
+Return type: Ticket
+Raises: HTTPException
+Decorators: router.get('/tickets/{ticket_id}', response_model=Ticket)
+
+2026-09-10 12:04:38,095 DEBUG    docs_agent: Docstring prompt for update_ticket:
+You are a documentation agent. Write a concise Google-style Python docstring for the function described below. Return only the docstring body text (no triple quotes, no code).
+Function: update_ticket
+Async: False
+Parameters: ticket_id: Annotated[int, Path(gt=0)], update: TicketUpdate, tickets: TicketRepository
+Return type: Ticket
+Raises: HTTPException
+Decorators: router.patch('/tickets/{ticket_id}', response_model=Ticket)
+
+2026-09-10 12:04:38,096 DEBUG    docs_agent: Docstring prompt for delete_ticket:
+You are a documentation agent. Write a concise Google-style Python docstring for the function described below. Return only the docstring body text (no triple quotes, no code).
+Function: delete_ticket
+Async: False
+Parameters: ticket_id: Annotated[int, Path(gt=0)], tickets: TicketRepository
+Return type: Response
+Raises: HTTPException
+Decorators: router.delete('/tickets/{ticket_id}', status_code=status.HTTP_204_NO_CONTENT)
+
+2026-09-10 12:04:38,097 INFO     docs_agent: [dry-run] Would apply 7 docstring(s) to C:\Users\weibhing\OneDrive - Intel Corporation\Documents\ai-ticketing-system\app\api.py
+2026-09-10 12:04:38,097 DEBUG    docs_agent: Docstring prompt for TicketRepository.__init__:
+You are a documentation agent. Write a concise Google-style Python docstring for the function described below. Return only the docstring body text (no triple quotes, no code).
+Function: TicketRepository.__init__
+Async: False
+Parameters: database_path: str | Path
+Return type: None
+Raises: none observed
+Decorators: none
+
+2026-09-10 12:04:38,098 DEBUG    docs_agent: Docstring prompt for TicketRepository.close:
+You are a documentation agent. Write a concise Google-style Python docstring for the function described below. Return only the docstring body text (no triple quotes, no code).
+Function: TicketRepository.close
+Async: False
+Parameters: none
+Return type: None
+Raises: none observed
+Decorators: none
+
+2026-09-10 12:04:38,098 DEBUG    docs_agent: Docstring prompt for TicketRepository._initialize:
+You are a documentation agent. Write a concise Google-style Python docstring for the function described below. Return only the docstring body text (no triple quotes, no code).
+Function: TicketRepository._initialize
+Async: False
+Parameters: none
+Return type: None
+Raises: none observed
+Decorators: none
+
+2026-09-10 12:04:38,098 DEBUG    docs_agent: Docstring prompt for TicketRepository.seed_defaults:
+You are a documentation agent. Write a concise Google-style Python docstring for the function described below. Return only the docstring body text (no triple quotes, no code).
+Function: TicketRepository.seed_defaults
+Async: False
+Parameters: none
+Return type: None
+Raises: none observed
+Decorators: none
+
+2026-09-10 12:04:38,098 DEBUG    docs_agent: Docstring prompt for TicketRepository.create:
+You are a documentation agent. Write a concise Google-style Python docstring for the function described below. Return only the docstring body text (no triple quotes, no code).
+Function: TicketRepository.create
+Async: False
+Parameters: ticket: TicketCreate
+Return type: Ticket
+Raises: none observed
+Decorators: none
+
+2026-09-10 12:04:38,098 DEBUG    docs_agent: Docstring prompt for TicketRepository.list:
+You are a documentation agent. Write a concise Google-style Python docstring for the function described below. Return only the docstring body text (no triple quotes, no code).
+Function: TicketRepository.list
+Async: False
+Parameters: filters: TicketFilters | None
+Return type: list[Ticket]
+Raises: none observed
+Decorators: none
+
+2026-09-10 12:04:38,098 DEBUG    docs_agent: Docstring prompt for TicketRepository.get:
+You are a documentation agent. Write a concise Google-style Python docstring for the function described below. Return only the docstring body text (no triple quotes, no code).
+Function: TicketRepository.get
+Async: False
+Parameters: ticket_id: int
+Return type: Ticket
+Raises: TicketNotFoundError
+Decorators: none
+
+2026-09-10 12:04:38,098 DEBUG    docs_agent: Docstring prompt for TicketRepository.update:
+You are a documentation agent. Write a concise Google-style Python docstring for the function described below. Return only the docstring body text (no triple quotes, no code).
+Function: TicketRepository.update
+Async: False
+Parameters: ticket_id: int, update: TicketUpdate
+Return type: Ticket
+Raises: TicketNotFoundError
+Decorators: none
+
+2026-09-10 12:04:38,098 DEBUG    docs_agent: Docstring prompt for TicketRepository.delete:
+You are a documentation agent. Write a concise Google-style Python docstring for the function described below. Return only the docstring body text (no triple quotes, no code).
+Function: TicketRepository.delete
+Async: False
+Parameters: ticket_id: int
+Return type: None
+Raises: TicketNotFoundError
+Decorators: none
+
+2026-09-10 12:04:38,098 DEBUG    docs_agent: Docstring prompt for TicketRepository._now:
+You are a documentation agent. Write a concise Google-style Python docstring for the function described below. Return only the docstring body text (no triple quotes, no code).
+Function: TicketRepository._now
+Async: False
+Parameters: none
+Return type: datetime
+Raises: none observed
+Decorators: staticmethod
+
+2026-09-10 12:04:38,098 DEBUG    docs_agent: Docstring prompt for TicketRepository._row_to_ticket:
+You are a documentation agent. Write a concise Google-style Python docstring for the function described below. Return only the docstring body text (no triple quotes, no code).
+Function: TicketRepository._row_to_ticket
+Async: False
+Parameters: row: Iterable[object]
+Return type: Ticket
+Raises: none observed
+Decorators: staticmethod
+
+2026-09-10 12:04:38,101 INFO     docs_agent: [dry-run] Would apply 11 docstring(s) to C:\Users\weibhing\OneDrive - Intel Corporation\Documents\ai-ticketing-system\app\database.py
+2026-09-10 12:04:38,101 DEBUG    docs_agent: Docstring prompt for create_app:
+You are a documentation agent. Write a concise Google-style Python docstring for the function described below. Return only the docstring body text (no triple quotes, no code).
+Function: create_app
+Async: False
+Parameters: database_path: str | None, seed: bool
+Return type: FastAPI
+Raises: none observed
+Decorators: none
+
+2026-09-10 12:04:38,101 DEBUG    docs_agent: Docstring prompt for lifespan:
+You are a documentation agent. Write a concise Google-style Python docstring for the function described below. Return only the docstring body text (no triple quotes, no code).
+Function: lifespan
+Async: True
+Parameters: _: FastAPI
+Return type: AsyncIterator[None]
+Raises: none observed
+Decorators: asynccontextmanager
+
+2026-09-10 12:04:38,101 DEBUG    docs_agent: Docstring prompt for health:
+You are a documentation agent. Write a concise Google-style Python docstring for the function described below. Return only the docstring body text (no triple quotes, no code).
+Function: health
+Async: False
+Parameters: none
+Return type: dict[str, str]
+Raises: none observed
+Decorators: app.get('/health')
+
+2026-09-10 12:04:38,102 INFO     docs_agent: [dry-run] Would apply 3 docstring(s) to C:\Users\weibhing\OneDrive - Intel Corporation\Documents\ai-ticketing-system\app\main.py
+2026-09-10 12:04:38,103 DEBUG    docs_agent: Docstring prompt for TicketCreate.normalize_required_strings:
+You are a documentation agent. Write a concise Google-style Python docstring for the function described below. Return only the docstring body text (no triple quotes, no code).
+Function: TicketCreate.normalize_required_strings
+Async: False
+Parameters: value: Any
+Return type: Any
+Raises: none observed
+Decorators: field_validator('title', 'description', 'requester', mode='before'), classmethod
+
+2026-09-10 12:04:38,103 DEBUG    docs_agent: Docstring prompt for TicketUpdate.reject_null_and_normalize_strings:
+You are a documentation agent. Write a concise Google-style Python docstring for the function described below. Return only the docstring body text (no triple quotes, no code).
+Function: TicketUpdate.reject_null_and_normalize_strings
+Async: False
+Parameters: value: Any
+Return type: Any
+Raises: ValueError
+Decorators: field_validator('title', 'description', 'requester', 'priority', 'status', mode='before'), classmethod
+
+2026-09-10 12:04:38,103 DEBUG    docs_agent: Docstring prompt for TicketFilters.normalize_search:
+You are a documentation agent. Write a concise Google-style Python docstring for the function described below. Return only the docstring body text (no triple quotes, no code).
+Function: TicketFilters.normalize_search
+Async: False
+Parameters: value: Any
+Return type: Any
+Raises: none observed
+Decorators: field_validator('search', mode='before'), classmethod
+
+2026-09-10 12:04:38,106 INFO     docs_agent: [dry-run] Would apply 3 docstring(s) to C:\Users\weibhing\OneDrive - Intel Corporation\Documents\ai-ticketing-system\app\models.py
+2026-09-10 12:04:38,109 DEBUG    docs_agent: Docstring prompt for _event_value:
+You are a documentation agent. Write a concise Google-style Python docstring for the function described below. Return only the docstring body text (no triple quotes, no code).
+Function: _event_value
+Async: False
+Parameters: args: object
+Return type: str
+Raises: none observed
+Decorators: none
+
+2026-09-10 12:04:38,109 DEBUG    docs_agent: Docstring prompt for _normalize_select_value:
+You are a documentation agent. Write a concise Google-style Python docstring for the function described below. Return only the docstring body text (no triple quotes, no code).
+Function: _normalize_select_value
+Async: False
+Parameters: value: object, allowed_values: tuple[str, ...]
+Return type: str
+Raises: none observed
+Decorators: none
+
+2026-09-10 12:04:38,109 DEBUG    docs_agent: Docstring prompt for build_ticket_dashboard:
+You are a documentation agent. Write a concise Google-style Python docstring for the function described below. Return only the docstring body text (no triple quotes, no code).
+Function: build_ticket_dashboard
+Async: False
+Parameters: repository: TicketRepository
+Return type: None
+Raises: none observed
+Decorators: none
+
+2026-09-10 12:04:38,109 DEBUG    docs_agent: Docstring prompt for current_filters:
+You are a documentation agent. Write a concise Google-style Python docstring for the function described below. Return only the docstring body text (no triple quotes, no code).
+Function: current_filters
+Async: False
+Parameters: none
+Return type: TicketFilters
+Raises: none observed
+Decorators: none
+
+2026-09-10 12:04:38,109 DEBUG    docs_agent: Docstring prompt for refresh:
+You are a documentation agent. Write a concise Google-style Python docstring for the function described below. Return only the docstring body text (no triple quotes, no code).
+Function: refresh
+Async: False
+Parameters: none
+Return type: None
+Raises: none observed
+Decorators: none
+
+2026-09-10 12:04:38,109 DEBUG    docs_agent: Docstring prompt for clear_filters:
+You are a documentation agent. Write a concise Google-style Python docstring for the function described below. Return only the docstring body text (no triple quotes, no code).
+Function: clear_filters
+Async: False
+Parameters: none
+Return type: None
+Raises: none observed
+Decorators: none
+
+2026-09-10 12:04:38,109 DEBUG    docs_agent: Docstring prompt for create_ticket:
+You are a documentation agent. Write a concise Google-style Python docstring for the function described below. Return only the docstring body text (no triple quotes, no code).
+Function: create_ticket
+Async: False
+Parameters: none
+Return type: None
+Raises: none observed
+Decorators: none
+
+2026-09-10 12:04:38,110 DEBUG    docs_agent: Docstring prompt for render_ticket:
+You are a documentation agent. Write a concise Google-style Python docstring for the function described below. Return only the docstring body text (no triple quotes, no code).
+Function: render_ticket
+Async: False
+Parameters: ticket: Ticket
+Return type: None
+Raises: none observed
+Decorators: none
+
+2026-09-10 12:04:38,110 DEBUG    docs_agent: Docstring prompt for update_status:
+You are a documentation agent. Write a concise Google-style Python docstring for the function described below. Return only the docstring body text (no triple quotes, no code).
+Function: update_status
+Async: False
+Parameters: ticket_id: int, status_value: str
+Return type: None
+Raises: none observed
+Decorators: none
+
+2026-09-10 12:04:38,110 DEBUG    docs_agent: Docstring prompt for mount_ui:
+You are a documentation agent. Write a concise Google-style Python docstring for the function described below. Return only the docstring body text (no triple quotes, no code).
+Function: mount_ui
+Async: False
+Parameters: app: FastAPI, repository: TicketRepository, storage_secret: str | None
+Return type: None
+Raises: none observed
+Decorators: none
+
+2026-09-10 12:04:38,115 INFO     docs_agent: [dry-run] Would apply 10 docstring(s) to C:\Users\weibhing\OneDrive - Intel Corporation\Documents\ai-ticketing-system\app\ui.py
+2026-09-10 12:04:38,116 INFO     docs_agent: Inline documentation: 34 function(s) documented (apply=False)
+2026-09-10 12:04:38,116 INFO     docs_agent: === Entering phase: sphinx_generation ===
+2026-09-10 12:04:38,122 INFO     docs_agent: Created Sphinx config at C:\Users\weibhing\OneDrive - Intel Corporation\Documents\ai-ticketing-system\docs\sphinx\conf.py
+2026-09-10 12:04:38,128 INFO     docs_agent: Wrote Sphinx index at C:\Users\weibhing\OneDrive - Intel Corporation\Documents\ai-ticketing-system\docs\sphinx\index.rst
+2026-09-10 12:04:38,128 INFO     docs_agent: === Entering phase: review_maintenance ===
+2026-09-10 12:04:38,132 INFO     docs_agent: Saved manifest with 6 file(s) to C:\Users\weibhing\OneDrive - Intel Corporation\Documents\ai-ticketing-system\docs\agent_reports\manifest.json
+2026-09-10 12:04:38,140 INFO     docs_agent: Wrote review report to C:\Users\weibhing\OneDrive - Intel Corporation\Documents\ai-ticketing-system\docs\agent_reports\run-20260910T040438012351+0000.json and C:\Users\weibhing\OneDrive - Intel Corporation\Documents\ai-ticketing-system\docs\agent_reports\run-20260910T040438012351+0000.md
+2026-09-10 12:04:38,142 INFO     docs_agent: === Workflow finished with state: completed ===
+2026-09-10 12:04:43,378 INFO     docs_agent: === Entering phase: scope_identification ===
+2026-09-10 12:04:43,383 INFO     docs_agent: Scope identification found 6 candidate file(s)
+2026-09-10 12:04:43,386 INFO     docs_agent: Scope: 6 file(s) total, 6 changed, 0 unchanged (force=True)
+2026-09-10 12:04:43,387 INFO     docs_agent: === Entering phase: file_logic_analysis ===
+2026-09-10 12:04:43,388 DEBUG    docs_agent: Analyzed C:\Users\weibhing\OneDrive - Intel Corporation\Documents\ai-ticketing-system\app\__init__.py: 0 function(s) found
+2026-09-10 12:04:43,413 DEBUG    docs_agent: Analyzed C:\Users\weibhing\OneDrive - Intel Corporation\Documents\ai-ticketing-system\app\api.py: 7 function(s) found
+2026-09-10 12:04:43,417 DEBUG    docs_agent: Analyzed C:\Users\weibhing\OneDrive - Intel Corporation\Documents\ai-ticketing-system\app\database.py: 11 function(s) found
+2026-09-10 12:04:43,419 DEBUG    docs_agent: Analyzed C:\Users\weibhing\OneDrive - Intel Corporation\Documents\ai-ticketing-system\app\main.py: 3 function(s) found
+2026-09-10 12:04:43,421 DEBUG    docs_agent: Analyzed C:\Users\weibhing\OneDrive - Intel Corporation\Documents\ai-ticketing-system\app\models.py: 3 function(s) found
+2026-09-10 12:04:43,430 DEBUG    docs_agent: Analyzed C:\Users\weibhing\OneDrive - Intel Corporation\Documents\ai-ticketing-system\app\ui.py: 10 function(s) found
+2026-09-10 12:04:43,430 INFO     docs_agent: Analysis: 34 function(s) across 6 file(s), 34 missing docstrings
+2026-09-10 12:04:43,431 INFO     docs_agent: === Entering phase: inline_documentation ===
+2026-09-10 12:04:43,431 DEBUG    docs_agent: Docstring prompt for create_api_router:
+You are a documentation agent. Write a concise Google-style Python docstring for the function described below. Return only the docstring body text (no triple quotes, no code).
+Function: create_api_router
+Async: False
+Parameters: repository: TicketRepository
+Return type: APIRouter
+Raises: HTTPException
+Decorators: none
+
+2026-09-10 12:04:43,431 DEBUG    docs_agent: Docstring prompt for get_repository:
+You are a documentation agent. Write a concise Google-style Python docstring for the function described below. Return only the docstring body text (no triple quotes, no code).
+Function: get_repository
+Async: False
+Parameters: none
+Return type: TicketRepository
+Raises: none observed
+Decorators: none
+
+2026-09-10 12:04:43,431 DEBUG    docs_agent: Docstring prompt for list_tickets:
+You are a documentation agent. Write a concise Google-style Python docstring for the function described below. Return only the docstring body text (no triple quotes, no code).
+Function: list_tickets
+Async: False
+Parameters: status_filter: TicketStatus | None, priority: TicketPriority | None, search: str | None, tickets: TicketRepository
+Return type: list[Ticket]
+Raises: none observed
+Decorators: router.get('/tickets', response_model=list[Ticket])
+
+2026-09-10 12:04:43,431 DEBUG    docs_agent: Docstring prompt for create_ticket:
+You are a documentation agent. Write a concise Google-style Python docstring for the function described below. Return only the docstring body text (no triple quotes, no code).
+Function: create_ticket
+Async: False
+Parameters: ticket: TicketCreate, tickets: TicketRepository
+Return type: Ticket
+Raises: none observed
+Decorators: router.post('/tickets', response_model=Ticket, status_code=status.HTTP_201_CREATED)
+
+2026-09-10 12:04:43,432 DEBUG    docs_agent: Docstring prompt for get_ticket:
+You are a documentation agent. Write a concise Google-style Python docstring for the function described below. Return only the docstring body text (no triple quotes, no code).
+Function: get_ticket
+Async: False
+Parameters: ticket_id: Annotated[int, Path(gt=0)], tickets: TicketRepository
+Return type: Ticket
+Raises: HTTPException
+Decorators: router.get('/tickets/{ticket_id}', response_model=Ticket)
+
+2026-09-10 12:04:43,432 DEBUG    docs_agent: Docstring prompt for update_ticket:
+You are a documentation agent. Write a concise Google-style Python docstring for the function described below. Return only the docstring body text (no triple quotes, no code).
+Function: update_ticket
+Async: False
+Parameters: ticket_id: Annotated[int, Path(gt=0)], update: TicketUpdate, tickets: TicketRepository
+Return type: Ticket
+Raises: HTTPException
+Decorators: router.patch('/tickets/{ticket_id}', response_model=Ticket)
+
+2026-09-10 12:04:43,432 DEBUG    docs_agent: Docstring prompt for delete_ticket:
+You are a documentation agent. Write a concise Google-style Python docstring for the function described below. Return only the docstring body text (no triple quotes, no code).
+Function: delete_ticket
+Async: False
+Parameters: ticket_id: Annotated[int, Path(gt=0)], tickets: TicketRepository
+Return type: Response
+Raises: HTTPException
+Decorators: router.delete('/tickets/{ticket_id}', status_code=status.HTTP_204_NO_CONTENT)
+
+2026-09-10 12:04:43,437 INFO     docs_agent: Applied 7 docstring(s) to C:\Users\weibhing\OneDrive - Intel Corporation\Documents\ai-ticketing-system\app\api.py
+2026-09-10 12:04:43,441 DEBUG    docs_agent: Docstring prompt for TicketRepository.__init__:
+You are a documentation agent. Write a concise Google-style Python docstring for the function described below. Return only the docstring body text (no triple quotes, no code).
+Function: TicketRepository.__init__
+Async: False
+Parameters: database_path: str | Path
+Return type: None
+Raises: none observed
+Decorators: none
+
+2026-09-10 12:04:43,441 DEBUG    docs_agent: Docstring prompt for TicketRepository.close:
+You are a documentation agent. Write a concise Google-style Python docstring for the function described below. Return only the docstring body text (no triple quotes, no code).
+Function: TicketRepository.close
+Async: False
+Parameters: none
+Return type: None
+Raises: none observed
+Decorators: none
+
+2026-09-10 12:04:43,441 DEBUG    docs_agent: Docstring prompt for TicketRepository._initialize:
+You are a documentation agent. Write a concise Google-style Python docstring for the function described below. Return only the docstring body text (no triple quotes, no code).
+Function: TicketRepository._initialize
+Async: False
+Parameters: none
+Return type: None
+Raises: none observed
+Decorators: none
+
+2026-09-10 12:04:43,441 DEBUG    docs_agent: Docstring prompt for TicketRepository.seed_defaults:
+You are a documentation agent. Write a concise Google-style Python docstring for the function described below. Return only the docstring body text (no triple quotes, no code).
+Function: TicketRepository.seed_defaults
+Async: False
+Parameters: none
+Return type: None
+Raises: none observed
+Decorators: none
+
+2026-09-10 12:04:43,441 DEBUG    docs_agent: Docstring prompt for TicketRepository.create:
+You are a documentation agent. Write a concise Google-style Python docstring for the function described below. Return only the docstring body text (no triple quotes, no code).
+Function: TicketRepository.create
+Async: False
+Parameters: ticket: TicketCreate
+Return type: Ticket
+Raises: none observed
+Decorators: none
+
+2026-09-10 12:04:43,441 DEBUG    docs_agent: Docstring prompt for TicketRepository.list:
+You are a documentation agent. Write a concise Google-style Python docstring for the function described below. Return only the docstring body text (no triple quotes, no code).
+Function: TicketRepository.list
+Async: False
+Parameters: filters: TicketFilters | None
+Return type: list[Ticket]
+Raises: none observed
+Decorators: none
+
+2026-09-10 12:04:43,442 DEBUG    docs_agent: Docstring prompt for TicketRepository.get:
+You are a documentation agent. Write a concise Google-style Python docstring for the function described below. Return only the docstring body text (no triple quotes, no code).
+Function: TicketRepository.get
+Async: False
+Parameters: ticket_id: int
+Return type: Ticket
+Raises: TicketNotFoundError
+Decorators: none
+
+2026-09-10 12:04:43,442 DEBUG    docs_agent: Docstring prompt for TicketRepository.update:
+You are a documentation agent. Write a concise Google-style Python docstring for the function described below. Return only the docstring body text (no triple quotes, no code).
+Function: TicketRepository.update
+Async: False
+Parameters: ticket_id: int, update: TicketUpdate
+Return type: Ticket
+Raises: TicketNotFoundError
+Decorators: none
+
+2026-09-10 12:04:43,442 DEBUG    docs_agent: Docstring prompt for TicketRepository.delete:
+You are a documentation agent. Write a concise Google-style Python docstring for the function described below. Return only the docstring body text (no triple quotes, no code).
+Function: TicketRepository.delete
+Async: False
+Parameters: ticket_id: int
+Return type: None
+Raises: TicketNotFoundError
+Decorators: none
+
+2026-09-10 12:04:43,442 DEBUG    docs_agent: Docstring prompt for TicketRepository._now:
+You are a documentation agent. Write a concise Google-style Python docstring for the function described below. Return only the docstring body text (no triple quotes, no code).
+Function: TicketRepository._now
+Async: False
+Parameters: none
+Return type: datetime
+Raises: none observed
+Decorators: staticmethod
+
+2026-09-10 12:04:43,442 DEBUG    docs_agent: Docstring prompt for TicketRepository._row_to_ticket:
+You are a documentation agent. Write a concise Google-style Python docstring for the function described below. Return only the docstring body text (no triple quotes, no code).
+Function: TicketRepository._row_to_ticket
+Async: False
+Parameters: row: Iterable[object]
+Return type: Ticket
+Raises: none observed
+Decorators: staticmethod
+
+2026-09-10 12:04:43,447 INFO     docs_agent: Applied 11 docstring(s) to C:\Users\weibhing\OneDrive - Intel Corporation\Documents\ai-ticketing-system\app\database.py
+2026-09-10 12:04:43,448 DEBUG    docs_agent: Docstring prompt for create_app:
+You are a documentation agent. Write a concise Google-style Python docstring for the function described below. Return only the docstring body text (no triple quotes, no code).
+Function: create_app
+Async: False
+Parameters: database_path: str | None, seed: bool
+Return type: FastAPI
+Raises: none observed
+Decorators: none
+
+2026-09-10 12:04:43,448 DEBUG    docs_agent: Docstring prompt for lifespan:
+You are a documentation agent. Write a concise Google-style Python docstring for the function described below. Return only the docstring body text (no triple quotes, no code).
+Function: lifespan
+Async: True
+Parameters: _: FastAPI
+Return type: AsyncIterator[None]
+Raises: none observed
+Decorators: asynccontextmanager
+
+2026-09-10 12:04:43,448 DEBUG    docs_agent: Docstring prompt for health:
+You are a documentation agent. Write a concise Google-style Python docstring for the function described below. Return only the docstring body text (no triple quotes, no code).
+Function: health
+Async: False
+Parameters: none
+Return type: dict[str, str]
+Raises: none observed
+Decorators: app.get('/health')
+
+2026-09-10 12:04:43,453 INFO     docs_agent: Applied 3 docstring(s) to C:\Users\weibhing\OneDrive - Intel Corporation\Documents\ai-ticketing-system\app\main.py
+2026-09-10 12:04:43,455 DEBUG    docs_agent: Docstring prompt for TicketCreate.normalize_required_strings:
+You are a documentation agent. Write a concise Google-style Python docstring for the function described below. Return only the docstring body text (no triple quotes, no code).
+Function: TicketCreate.normalize_required_strings
+Async: False
+Parameters: value: Any
+Return type: Any
+Raises: none observed
+Decorators: field_validator('title', 'description', 'requester', mode='before'), classmethod
+
+2026-09-10 12:04:43,456 DEBUG    docs_agent: Docstring prompt for TicketUpdate.reject_null_and_normalize_strings:
+You are a documentation agent. Write a concise Google-style Python docstring for the function described below. Return only the docstring body text (no triple quotes, no code).
+Function: TicketUpdate.reject_null_and_normalize_strings
+Async: False
+Parameters: value: Any
+Return type: Any
+Raises: ValueError
+Decorators: field_validator('title', 'description', 'requester', 'priority', 'status', mode='before'), classmethod
+
+2026-09-10 12:04:43,456 DEBUG    docs_agent: Docstring prompt for TicketFilters.normalize_search:
+You are a documentation agent. Write a concise Google-style Python docstring for the function described below. Return only the docstring body text (no triple quotes, no code).
+Function: TicketFilters.normalize_search
+Async: False
+Parameters: value: Any
+Return type: Any
+Raises: none observed
+Decorators: field_validator('search', mode='before'), classmethod
+
+2026-09-10 12:04:43,461 INFO     docs_agent: Applied 3 docstring(s) to C:\Users\weibhing\OneDrive - Intel Corporation\Documents\ai-ticketing-system\app\models.py
+2026-09-10 12:04:43,462 DEBUG    docs_agent: Docstring prompt for _event_value:
+You are a documentation agent. Write a concise Google-style Python docstring for the function described below. Return only the docstring body text (no triple quotes, no code).
+Function: _event_value
+Async: False
+Parameters: args: object
+Return type: str
+Raises: none observed
+Decorators: none
+
+2026-09-10 12:04:43,462 DEBUG    docs_agent: Docstring prompt for _normalize_select_value:
+You are a documentation agent. Write a concise Google-style Python docstring for the function described below. Return only the docstring body text (no triple quotes, no code).
+Function: _normalize_select_value
+Async: False
+Parameters: value: object, allowed_values: tuple[str, ...]
+Return type: str
+Raises: none observed
+Decorators: none
+
+2026-09-10 12:04:43,462 DEBUG    docs_agent: Docstring prompt for build_ticket_dashboard:
+You are a documentation agent. Write a concise Google-style Python docstring for the function described below. Return only the docstring body text (no triple quotes, no code).
+Function: build_ticket_dashboard
+Async: False
+Parameters: repository: TicketRepository
+Return type: None
+Raises: none observed
+Decorators: none
+
+2026-09-10 12:04:43,462 DEBUG    docs_agent: Docstring prompt for current_filters:
+You are a documentation agent. Write a concise Google-style Python docstring for the function described below. Return only the docstring body text (no triple quotes, no code).
+Function: current_filters
+Async: False
+Parameters: none
+Return type: TicketFilters
+Raises: none observed
+Decorators: none
+
+2026-09-10 12:04:43,462 DEBUG    docs_agent: Docstring prompt for refresh:
+You are a documentation agent. Write a concise Google-style Python docstring for the function described below. Return only the docstring body text (no triple quotes, no code).
+Function: refresh
+Async: False
+Parameters: none
+Return type: None
+Raises: none observed
+Decorators: none
+
+2026-09-10 12:04:43,462 DEBUG    docs_agent: Docstring prompt for clear_filters:
+You are a documentation agent. Write a concise Google-style Python docstring for the function described below. Return only the docstring body text (no triple quotes, no code).
+Function: clear_filters
+Async: False
+Parameters: none
+Return type: None
+Raises: none observed
+Decorators: none
+
+2026-09-10 12:04:43,463 DEBUG    docs_agent: Docstring prompt for create_ticket:
+You are a documentation agent. Write a concise Google-style Python docstring for the function described below. Return only the docstring body text (no triple quotes, no code).
+Function: create_ticket
+Async: False
+Parameters: none
+Return type: None
+Raises: none observed
+Decorators: none
+
+2026-09-10 12:04:43,463 DEBUG    docs_agent: Docstring prompt for render_ticket:
+You are a documentation agent. Write a concise Google-style Python docstring for the function described below. Return only the docstring body text (no triple quotes, no code).
+Function: render_ticket
+Async: False
+Parameters: ticket: Ticket
+Return type: None
+Raises: none observed
+Decorators: none
+
+2026-09-10 12:04:43,463 DEBUG    docs_agent: Docstring prompt for update_status:
+You are a documentation agent. Write a concise Google-style Python docstring for the function described below. Return only the docstring body text (no triple quotes, no code).
+Function: update_status
+Async: False
+Parameters: ticket_id: int, status_value: str
+Return type: None
+Raises: none observed
+Decorators: none
+
+2026-09-10 12:04:43,463 DEBUG    docs_agent: Docstring prompt for mount_ui:
+You are a documentation agent. Write a concise Google-style Python docstring for the function described below. Return only the docstring body text (no triple quotes, no code).
+Function: mount_ui
+Async: False
+Parameters: app: FastAPI, repository: TicketRepository, storage_secret: str | None
+Return type: None
+Raises: none observed
+Decorators: none
+
+2026-09-10 12:04:43,467 INFO     docs_agent: Applied 10 docstring(s) to C:\Users\weibhing\OneDrive - Intel Corporation\Documents\ai-ticketing-system\app\ui.py
+2026-09-10 12:04:43,468 INFO     docs_agent: Inline documentation: 34 function(s) documented (apply=True)
+2026-09-10 12:04:43,468 INFO     docs_agent: === Entering phase: sphinx_generation ===
+2026-09-10 12:04:43,472 INFO     docs_agent: Wrote Sphinx index at C:\Users\weibhing\OneDrive - Intel Corporation\Documents\ai-ticketing-system\docs\sphinx\index.rst
+2026-09-10 12:04:53,758 INFO     docs_agent: Sphinx build succeeded: C:\Users\weibhing\OneDrive - Intel Corporation\Documents\ai-ticketing-system\docs\sphinx\_build\html
+2026-09-10 12:04:53,759 INFO     docs_agent: === Entering phase: review_maintenance ===
+2026-09-10 12:04:53,762 INFO     docs_agent: Saved manifest with 6 file(s) to C:\Users\weibhing\OneDrive - Intel Corporation\Documents\ai-ticketing-system\docs\agent_reports\manifest.json
+2026-09-10 12:04:53,767 INFO     docs_agent: Wrote review report to C:\Users\weibhing\OneDrive - Intel Corporation\Documents\ai-ticketing-system\docs\agent_reports\run-20260910T040443378735+0000.json and C:\Users\weibhing\OneDrive - Intel Corporation\Documents\ai-ticketing-system\docs\agent_reports\run-20260910T040443378735+0000.md
+2026-09-10 12:04:53,768 INFO     docs_agent: === Workflow finished with state: completed ===
+2026-09-10 13:21:18,651 INFO     docs_agent: === Entering phase: scope_identification ===
+2026-09-10 13:21:18,757 INFO     docs_agent: Scope identification found 6 candidate file(s)
+2026-09-10 13:21:18,784 INFO     docs_agent: Scope: 6 file(s) total, 6 changed, 0 unchanged (force=True)
+2026-09-10 13:21:18,849 INFO     docs_agent: === Entering phase: file_logic_analysis ===
+2026-09-10 13:21:18,898 DEBUG    docs_agent: Analyzed C:\Users\weibhing\OneDrive - Intel Corporation\Documents\ai-ticketing-system\app\__init__.py: 0 function(s) found
+2026-09-10 13:21:18,956 DEBUG    docs_agent: Analyzed C:\Users\weibhing\OneDrive - Intel Corporation\Documents\ai-ticketing-system\app\api.py: 7 function(s) found
+2026-09-10 13:21:18,968 DEBUG    docs_agent: Analyzed C:\Users\weibhing\OneDrive - Intel Corporation\Documents\ai-ticketing-system\app\database.py: 11 function(s) found
+2026-09-10 13:21:18,971 DEBUG    docs_agent: Analyzed C:\Users\weibhing\OneDrive - Intel Corporation\Documents\ai-ticketing-system\app\main.py: 3 function(s) found
+2026-09-10 13:21:18,976 DEBUG    docs_agent: Analyzed C:\Users\weibhing\OneDrive - Intel Corporation\Documents\ai-ticketing-system\app\models.py: 3 function(s) found
+2026-09-10 13:21:18,989 DEBUG    docs_agent: Analyzed C:\Users\weibhing\OneDrive - Intel Corporation\Documents\ai-ticketing-system\app\ui.py: 10 function(s) found
+2026-09-10 13:21:18,989 INFO     docs_agent: Analysis: 34 function(s) across 6 file(s), 0 missing docstrings
+2026-09-10 13:21:18,996 INFO     docs_agent: === Entering phase: inline_documentation ===
+2026-09-10 13:21:18,999 INFO     docs_agent: Inline documentation: 0 function(s) documented (apply=True)
+2026-09-10 13:21:19,019 INFO     docs_agent: === Entering phase: sphinx_generation ===
+2026-09-10 13:21:19,075 INFO     docs_agent: Wrote Sphinx index at C:\Users\weibhing\OneDrive - Intel Corporation\Documents\ai-ticketing-system\docs\sphinx\index.rst
+2026-09-10 13:21:43,420 INFO     docs_agent: Sphinx build succeeded: C:\Users\weibhing\OneDrive - Intel Corporation\Documents\ai-ticketing-system\docs\sphinx\_build\html
+2026-09-10 13:21:43,429 INFO     docs_agent: === Entering phase: review_maintenance ===
+2026-09-10 13:21:43,432 INFO     docs_agent: Saved manifest with 6 file(s) to C:\Users\weibhing\OneDrive - Intel Corporation\Documents\ai-ticketing-system\docs\agent_reports\manifest.json
+2026-09-10 13:21:43,576 INFO     docs_agent: Wrote review report to C:\Users\weibhing\OneDrive - Intel Corporation\Documents\ai-ticketing-system\docs\agent_reports\run-20260910T052118651275+0000.json and C:\Users\weibhing\OneDrive - Intel Corporation\Documents\ai-ticketing-system\docs\agent_reports\run-20260910T052118651275+0000.md
+2026-09-10 13:21:43,642 INFO     docs_agent: === Workflow finished with state: completed ===

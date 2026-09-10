@@ -1,5 +1,7 @@
-__pycache__/
-.pytest_cache/
-*.py[cod]
 data/
-*.duckdb
+.venv/
+__pycache__/
+_build/
+uv.exe
+uvx.exe
+uvw.exe
